@@ -1,0 +1,30 @@
+---
+  hosts: all
+  tasks:
+  - name: create
+    file:
+      dest: /opt/ansible/mok1_mnm
+      state: touch
+    tags:
+      - create
+
+- name: play2
+  hosts: all:!haproxy_server
+  tags:
+    -  delete
+  tasks:
+  - name: delete
+    file:
+      dest: /opt/ansible/mok1_mnm
+      state: absent
+
+
+- name: play3
+  hosts: haproxy_server
+  tasks:
+  - name: delete
+    file:
+      dest: /opt/ansible/mok1_mnm
+      state: absent
+    tags:
+      - delete
