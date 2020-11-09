@@ -1,4 +1,15 @@
 ---
+- name: play0
+  hosts: all
+  tasks:
+  - name: create_folders
+    file:
+      path: /opt/ansible
+      state: directory
+      mode: '0755'
+    become: yes
+
+- name: play1
   hosts: all
   tasks:
   - name: create
@@ -7,6 +18,7 @@
       state: touch
     tags:
       - create
+    become: yes
 
 - name: play2
   hosts: all:!haproxy_server
@@ -15,9 +27,9 @@
   tasks:
   - name: delete
     file:
-      dest: /opt/ansible/mok1_mnm
+      dest: /opt/ansible//mok1_mnm
       state: absent
-
+    become: yes
 
 - name: play3
   hosts: haproxy_server
@@ -28,3 +40,4 @@
       state: absent
     tags:
       - delete
+    become: yes
